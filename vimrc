@@ -13,6 +13,9 @@ Plugin 'gmarik/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
+Plugin 'ggreer/the_silver_searcher'
+Plugin 'rking/ag.vim'
+Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'abap'
 " Git plugin not hosted on GitHub
@@ -43,7 +46,7 @@ filetype plugin indent on    " required
 " Pathogen
 "" mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 "" curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-execute pathogen#infect()
+"execute pathogen#infect()
 
 " Indent automatically depending on filetype
 filetype plugin on
@@ -87,3 +90,8 @@ highlight Normal ctermfg=grey ctermbg=black
 " Thesaurus in latex
 " Ctrl x + Ctrl t (in insert mode)
 autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.dat
+
+" ag
+" requires the_silver_searcher to be installed
+let g:ackprg = 'ag --vimgrep'
+let g:ag_working_path_mode="r"
