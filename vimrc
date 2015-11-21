@@ -16,6 +16,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'ggreer/the_silver_searcher'
 Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'lervag/vimtex'
+Plugin 'Valloric/YouCompleteMe'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'abap'
 " Git plugin not hosted on GitHub
@@ -82,6 +84,18 @@ set lbr
 autocmd BufNewFile,BufRead *.tex set spell spelllang=en_gb
 autocmd BufNewFile,BufRead *.tex hi clear SpellBad
 autocmd BufNewFile,BufRead *.tex hi SpellBad cterm=underline,bold ctermfg=red
+
+" Latex autocomplete (with YouCompleteMe)
+" https://github.com/Valloric/YouCompleteMe
+" For Fedora:
+" cd ~/.vim/bundle/YouCompleteMe
+" ./install.py
+if !exists('g:ycm_semantic_triggers')
+	let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+			\ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
+			\ ]
 
 " Background colour
 highlight Normal ctermfg=grey ctermbg=black
