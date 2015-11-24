@@ -18,6 +18,9 @@ Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'lervag/vimtex'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/LanguageTool'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/syntastic'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'abap'
 " Git plugin not hosted on GitHub
@@ -109,3 +112,35 @@ autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.da
 " requires the_silver_searcher to be installed
 let g:ackprg = 'ag --vimgrep'
 let g:ag_working_path_mode="r"
+
+" languagetool
+" need to fetch languagetool-commandline and put it in a local dir
+let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
+
+" vim-airline
+" also run: pip install --user powerline-status
+" wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+" wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+" mkdir .fonts
+" mv PowerlineSymbols.otf ~/.fonts/
+" fc-cache -vf ~/.fonts/
+" mkdir .config/fontconfig/
+" mkdir .config/fontconfig/conf.d/
+" mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+"set t_Co=256
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+let g:airline_theme             = 'powerlineish'
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
