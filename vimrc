@@ -21,6 +21,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/LanguageTool'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/syntastic'
+Plugin 'chriskempson/vim-tomorrow-theme'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'abap'
 " Git plugin not hosted on GitHub
@@ -119,21 +120,19 @@ let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
 
 " vim-airline
 " also run: pip install --user powerline-status
-" wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-" wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-" mkdir .fonts
-" mv PowerlineSymbols.otf ~/.fonts/
-" fc-cache -vf ~/.fonts/
-" mkdir .config/fontconfig/
-" mkdir .config/fontconfig/conf.d/
-" mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
-"set t_Co=256
+" download powerline fonts, install them and use one of them in the terminal
+" good option: Inconsolata-g for Powerline g 10
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-let g:airline_theme             = 'powerlineish'
+let g:airline_theme = 'tomorrow'
+
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -144,3 +143,10 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" Tomorrow theme
+set background=dark
+colorscheme Tomorrow-Night-Eighties
+
+" Correct colours
+set t_Co=256
