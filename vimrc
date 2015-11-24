@@ -145,8 +145,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " Tomorrow theme
-set background=dark
 colorscheme Tomorrow-Night-Eighties
+set background=dark
 
 " Correct colours
 set t_Co=256
