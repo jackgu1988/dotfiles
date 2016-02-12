@@ -19,9 +19,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'lervag/vimtex'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/LanguageTool'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'abap'
 " Git plugin not hosted on GitHub
@@ -94,6 +95,7 @@ autocmd BufNewFile,BufRead *.tex hi SpellBad cterm=underline,bold ctermfg=red
 " For Fedora:
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.py
+" NOTE: needs python-devel and cmake
 if !exists('g:ycm_semantic_triggers')
 	let g:ycm_semantic_triggers = {}
 endif
@@ -108,6 +110,9 @@ highlight Normal ctermfg=grey ctermbg=black
 " Thesaurus in latex
 " Ctrl x + Ctrl t (in insert mode)
 autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.dat
+
+" Correct treatment of .tex files
+let g:tex_flavor='latex'
 
 " ag
 " requires the_silver_searcher to be installed
