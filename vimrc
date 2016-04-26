@@ -150,9 +150,34 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+
 " Tomorrow theme
 colorscheme Tomorrow-Night-Eighties
 set background=dark
 
 " Correct colours
 set t_Co=256
+
+" Be able to switch buffers without saving
+set hidden
+
+" Mouse
+set mouse=a
+
+" LaTeX-Box
+let g:tex_flavor='latex'
+autocmd FileType tex set spell wrap linebreak
+let g:LatexBox_latexmk_async=0
+let g:LatexBox_latexmk_preview_continuously=1
+let g:LatexBox_quickfix=2
+let g:LaTeXBox_output_type='' "Let latexmkrc choose the type 
+
+"""""""""""""
+" Shortcuts "
+"""""""""""""
+
+" Easy buffer switching
+nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprevious<CR>
