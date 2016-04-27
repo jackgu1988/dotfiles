@@ -27,6 +27,7 @@ Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'ervandew/supertab'
 Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'beloglazov/vim-online-thesaurus'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'abap'
 " Git plugin not hosted on GitHub
