@@ -183,6 +183,13 @@ if $SHELL=~'bin/fish'
 	set shell=/bin/zsh
 endif
 
+" Autosave if file exists
+ino <C-C> <Esc>
+
+if @% != "" && filereadable(@%) != 0
+	au FocusLost,InsertLeave,TextChanged * :wa
+endif
+
 """""""""""""
 " Shortcuts "
 """""""""""""
