@@ -22,7 +22,9 @@ Plugin 'vim-scripts/LanguageTool'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
-Plugin 'chriskempson/vim-tomorrow-theme'
+"Plugin 'chriskempson/vim-tomorrow-theme'
+"Plugin 'tomasr/molokai'
+Plugin 'morhetz/gruvbox'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'ervandew/supertab'
 Plugin 'kshenoy/vim-signature'
@@ -158,7 +160,11 @@ let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 
 " Tomorrow theme
-colorscheme Tomorrow-Night-Eighties
+"colorscheme Tomorrow-Night-Eighties
+"set background=dark
+
+" gruvbox theme
+colorscheme gruvbox
 set background=dark
 
 " Correct colours
