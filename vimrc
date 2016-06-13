@@ -13,8 +13,8 @@ Plugin 'gmarik/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'ggreer/the_silver_searcher'
-Plugin 'rking/ag.vim'
+"Plugin 'ggreer/the_silver_searcher'
+"Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-fugitive'
 " Plugin 'lervag/vimtex'
 Plugin 'Valloric/YouCompleteMe'
@@ -111,20 +111,21 @@ let g:ycm_semantic_triggers.tex = [
 			\ ]
 
 " Background colour
-highlight Normal ctermfg=grey ctermbg=black
-highlight Normal ctermfg=grey ctermbg=black
+"highlight Normal ctermfg=grey ctermbg=black
+"highlight Normal ctermfg=grey ctermbg=black
 
-" Thesaurus in latex
+" Offline Thesaurus in LaTeX
 " Ctrl x + Ctrl t (in insert mode)
 autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.dat
+" For online Thesaurus hit \ + K
 
 " Correct treatment of .tex files
 let g:tex_flavor='latex'
 
 " ag
 " requires the_silver_searcher to be installed
-let g:ackprg = 'ag --vimgrep'
-let g:ag_working_path_mode="r"
+"let g:ackprg = 'ag --vimgrep'
+"let g:ag_working_path_mode="r"
 
 " languagetool
 " need to fetch languagetool-commandline and put it in a local dir
@@ -158,6 +159,11 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
+
+" LaTeX syntax check
+" texlive-chktex or texlive-lacheck is required
+" lacheck seems to be better/less annoying
+let g:syntastic_tex_checkers=['lacheck']
 
 " Tomorrow theme
 "colorscheme Tomorrow-Night-Eighties
