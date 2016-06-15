@@ -165,6 +165,12 @@ let g:syntastic_warning_symbol = "⚠"
 " lacheck seems to be better/less annoying
 let g:syntastic_tex_checkers=['lacheck']
 
+" Disable spell checking in LaTeX comments (makes text more readable)
+let g:tex_comment_nospell= 1
+
+" Enable code folding in LaTeX
+"let g:tex_fold_enabled= 1
+
 " Tomorrow theme
 "colorscheme Tomorrow-Night-Eighties
 "set background=dark
@@ -201,6 +207,9 @@ ino <C-C> <Esc>
 if @% != "" && filereadable(@%) != 0
 	au FocusLost,InsertLeave,TextChanged * :wa
 endif
+
+" Highlight current line
+set cursorline
 
 """""""""""""
 " Shortcuts "
