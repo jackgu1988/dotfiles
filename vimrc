@@ -68,6 +68,8 @@ set lbr
 " Scroll when 8 lines from the bottom
 set scrolloff=8
 
+set noesckeys
+
 " Spell check + underline in tex files
 " z= for suggestions
 " [s and ]s for prev and next
@@ -111,7 +113,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 " Make it always visible
 set laststatus=2
 
-let g:airline_theme = 'tomorrow'
+let g:airline_theme = 'luna'
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -163,7 +165,7 @@ endif
 ino <C-C> <Esc>
 
 if @% != "" && filereadable(@%) != 0
-	au FocusLost,InsertLeave,TextChanged * :call AutoSave()
+	au FocusLost,InsertLeave,TextChanged * nested call AutoSave()
 endif
 
 " Highlight current line
@@ -174,7 +176,7 @@ set tabstop=4
 set shiftwidth=4
 
 " \q redraws the screen and removes any search highlighting
-nnoremap <silent> <leader>q :call ClearSearch()<cr>
+nnoremap <silent> <leader>q call ClearSearch()<cr>
 
 " Allow per-file settings
 set modeline
@@ -199,7 +201,6 @@ nnoremap <silent> <C-h> :bprevious<CR><C-h>
 function! AutoSave()
 	wa
 	redraw
-	SyntasticCheck
 endfunc
 
 " Indent file
