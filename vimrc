@@ -72,7 +72,7 @@ set scrolloff=8
 set timeoutlen=1000 ttimeoutlen=10
 
 " Spell check in tex files by default
-autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle()
+autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
 
 " Latex autocomplete (with YouCompleteMe)
 " https://github.com/Valloric/YouCompleteMe
@@ -233,9 +233,20 @@ nnoremap <C-a> :call NumberToggle()<cr>
 " Toggle spell checking
 " z= for suggestions
 " [s and ]s for prev and next
-function! SpellCheckToggle()
-	if($spell_on == 0)
-		set spell spelllang=en_gb
+function! SpellCheckToggle(lang_switch)
+	let sp_lang = "en_gb"
+
+	if(a:lang_switch == 1 && $spell_on == 1)
+		if($default_lang != 0)
+			let $default_lang = 1
+		else
+			let sp_lang = "en_gb,el"
+			let $default_lang = 0
+		endif
+	endif
+
+	if(($spell_on == 0 && a:lang_switch == 0) || (a:lang_switch == 1 && $spell_on == 1))
+		exe "set spell spelllang=" . sp_lang
 		hi clear SpellBad
 		hi SpellBad cterm=underline,bold ctermfg=red
 		let $spell_on = 1
@@ -245,4 +256,19 @@ function! SpellCheckToggle()
 	endif
 endfunc
 
-nnoremap <silent> <F6> :call SpellCheckToggle()<cr>
+nnoremap <silent> <F6> :call SpellCheckToggle(0)<cr>
+nnoremap <silent> <F5> :call SpellCheckToggle(1)<cr>
+
+" Change writing language between English and Greek
+" Useful because vim wants English for its key-bindings
+function! LanguageSwitch()
+	if($default_lang != 0)
+		set keymap=""
+		let $default_lang = 1
+	else
+		set keymap=greek_utf-8
+		let $default_lang = 0
+	endif
+endfunc
+
+nnoremap <silent> <F4> :call LanguageSwitch()<cr>
