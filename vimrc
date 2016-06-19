@@ -68,7 +68,8 @@ set lbr
 " Scroll when 8 lines from the bottom
 set scrolloff=8
 
-set noesckeys
+" Fix for sequences causing delay after ESC is pressed
+set timeoutlen=1000 ttimeoutlen=10
 
 " Spell check + underline in tex files
 " z= for suggestions
