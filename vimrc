@@ -4,50 +4,29 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-
-" The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'ggreer/the_silver_searcher'
-"Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-fugitive'
-" Plugin 'lervag/vimtex'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/LanguageTool'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
-"Plugin 'chriskempson/vim-tomorrow-theme'
-"Plugin 'tomasr/molokai'
 Plugin 'morhetz/gruvbox'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
+" Install texlive-texcount for VimtexCountWords to work
+Plugin 'lervag/vimtex'
 Plugin 'ervandew/supertab'
 Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'beloglazov/vim-online-thesaurus'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'abap'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
-
+Plugin 'terryma/vim-multiple-cursors'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
+
 " Brief help
 " :PluginList          - list configured plugins
 " :PluginInstall(!)    - install (update) plugins
@@ -57,19 +36,12 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-" Pathogen
-"" mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-"" curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-"execute pathogen#infect()
-
 " Indent automatically depending on filetype
-filetype plugin on
-set grepprg=grep\ -nH\ $*
-filetype indent on
 let g:tex_flavor='latex'
 set autoindent
+set cindent
 
-" Turn on line numbering. Turn it off with "set nonu" 
+" Turn on line numbering
 set number
 
 " Set syntax on
@@ -78,17 +50,23 @@ syntax on
 " Case insensitive search
 set ic
 
+" Match search results while typing
+set incsearch
+
+" Ignore case insensitive search if upper case characters exist
+set smartcase
+
 " Higlhight search
 set hls
+
+" Completion
+set wildmenu
 
 " Wrap text instead of being on one line
 set lbr
 
-" Change colorscheme from default to solarized
-"" cd ~/.vim/bundle
-"" git clone git://github.com/altercation/vim-colors-solarized.git
-" set background=dark
-" colorscheme solarized
+" Scroll when 8 lines from the bottom
+set scrolloff=8
 
 " Spell check + underline in tex files
 " z= for suggestions
@@ -110,10 +88,6 @@ let g:ycm_semantic_triggers.tex = [
 			\ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
 			\ ]
 
-" Background colour
-"highlight Normal ctermfg=grey ctermbg=black
-"highlight Normal ctermfg=grey ctermbg=black
-
 " Offline Thesaurus in LaTeX
 " Ctrl x + Ctrl t (in insert mode)
 autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.dat
@@ -121,11 +95,6 @@ autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.da
 
 " Correct treatment of .tex files
 let g:tex_flavor='latex'
-
-" ag
-" requires the_silver_searcher to be installed
-"let g:ackprg = 'ag --vimgrep'
-"let g:ag_working_path_mode="r"
 
 " languagetool
 " need to fetch languagetool-commandline and put it in a local dir
@@ -139,6 +108,8 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+" Make it always visible
+set laststatus=2
 
 let g:airline_theme = 'tomorrow'
 
@@ -168,33 +139,20 @@ let g:syntastic_tex_checkers=['lacheck']
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
 
-" Enable code folding in LaTeX
-"let g:tex_fold_enabled= 1
-
-" Tomorrow theme
-"colorscheme Tomorrow-Night-Eighties
-"set background=dark
-
 " gruvbox theme
-colorscheme gruvbox
+let g:gruvbox_italic=1
 set background=dark
+colorscheme gruvbox
+hi Visual ctermbg=White ctermfg=DarkGray
 
 " Correct colours
 set t_Co=256
 
-" Be able to switch buffers without saving
+" Be able to switch beffers without saving
 set hidden
 
 " Mouse
 set mouse=a
-
-" LaTeX-Box
-let g:tex_flavor='latex'
-autocmd FileType tex set spell wrap linebreak
-let g:LatexBox_latexmk_async=0
-let g:LatexBox_latexmk_preview_continuously=1
-let g:LatexBox_quickfix=2
-let g:LaTeXBox_output_type='' "Let latexmkrc choose the type 
 
 " Vim needs a POSIX-Compliant shell. Fish is not.
 if $SHELL=~'bin/fish'
@@ -205,16 +163,71 @@ endif
 ino <C-C> <Esc>
 
 if @% != "" && filereadable(@%) != 0
-	au FocusLost,InsertLeave,TextChanged * :wa
+	au FocusLost,InsertLeave,TextChanged * :call AutoSave()
 endif
 
 " Highlight current line
 set cursorline
+
+" Smaller tab size
+set tabstop=4
+set shiftwidth=4
+
+" \q redraws the screen and removes any search highlighting
+nnoremap <silent> <leader>q :call ClearSearch()<cr>
+
+" Allow per-file settings
+set modeline
+
+" Show tabs
+set list
+set listchars=tab:▸\ 
 
 """""""""""""
 " Shortcuts "
 """""""""""""
 
 " Easy buffer switching
-nnoremap <C-l> :bnext<CR>
-nnoremap <C-h> :bprevious<CR>
+nnoremap <silent> <C-l> :bnext<CR><C-l>
+nnoremap <silent> <C-h> :bprevious<CR><C-h>
+
+"""""""""""""
+" Functions "
+"""""""""""""
+
+" Autosave
+function! AutoSave()
+	wa
+	redraw
+	SyntasticCheck
+endfunc
+
+" Indent file
+function! Reindent()
+	let cursor_position = getpos('.')
+	normal! H
+	let window_position = getpos('.')
+	normal gg=G
+	call setpos('.', window_position)
+	normal! zt
+	call setpos('.', cursor_position)
+endfunc
+
+nnoremap <silent> <leader>f :call Reindent()<cr>
+
+" Clears the search and un-highlights the search results
+function! ClearSearch()
+	nohl
+	let @/ = ""
+endfunc
+
+" Toggle between absolute and relative line numbering
+function! NumberToggle()
+	if(&relativenumber == 1)
+		set norelativenumber
+	else
+		set relativenumber
+	endif
+endfunc
+
+nnoremap <C-a> :call NumberToggle()<cr>
