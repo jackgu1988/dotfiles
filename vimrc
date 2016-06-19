@@ -71,12 +71,8 @@ set scrolloff=8
 " Fix for sequences causing delay after ESC is pressed
 set timeoutlen=1000 ttimeoutlen=10
 
-" Spell check + underline in tex files
-" z= for suggestions
-" [s and ]s for prev and next
-autocmd BufNewFile,BufRead *.tex set spell spelllang=en_gb
-autocmd BufNewFile,BufRead *.tex hi clear SpellBad
-autocmd BufNewFile,BufRead *.tex hi SpellBad cterm=underline,bold ctermfg=red
+" Spell check in tex files by default
+autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle()
 
 " Latex autocomplete (with YouCompleteMe)
 " https://github.com/Valloric/YouCompleteMe
@@ -151,7 +147,7 @@ hi Visual ctermbg=White ctermfg=DarkGray
 " Correct colours
 set t_Co=256
 
-" Be able to switch beffers without saving
+" Be able to switch buffers without saving
 set hidden
 
 " Mouse
@@ -177,7 +173,7 @@ set tabstop=4
 set shiftwidth=4
 
 " \q redraws the screen and removes any search highlighting
-nnoremap <silent> <leader>q call ClearSearch()<cr>
+nnoremap <silent> <leader>q :call ClearSearch()<cr>
 
 " Allow per-file settings
 set modeline
@@ -233,3 +229,20 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-a> :call NumberToggle()<cr>
+
+" Toggle spell checking
+" z= for suggestions
+" [s and ]s for prev and next
+function! SpellCheckToggle()
+	if($spell_on == 0)
+		set spell spelllang=en_gb
+		hi clear SpellBad
+		hi SpellBad cterm=underline,bold ctermfg=red
+		let $spell_on = 1
+	else
+		set nospell
+		let $spell_on = 0
+	endif
+endfunc
+
+nnoremap <silent> <F6> :call SpellCheckToggle()<cr>
