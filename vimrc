@@ -234,14 +234,17 @@ nnoremap <C-a> :call NumberToggle()<cr>
 " z= for suggestions
 " [s and ]s for prev and next
 function! SpellCheckToggle(lang_switch)
+	echom ""
 	let sp_lang = "en_gb"
 
 	if(a:lang_switch == 1 && $spell_on == 1)
 		if($default_lang != 0)
-			let $default_lang = 1
+			let $default_lang = 0
+			echom "English spell check enabled"
 		else
 			let sp_lang = "en_gb,el"
-			let $default_lang = 0
+			let $default_lang = 1
+			echom "Greek/English spell check enabled"
 		endif
 	endif
 
@@ -264,10 +267,12 @@ nnoremap <silent> <F5> :call SpellCheckToggle(1)<cr>
 function! LanguageSwitch()
 	if($default_lang != 0)
 		set keymap=""
-		let $default_lang = 1
+		let $default_lang = 0
+		echom "English keyboard enabled"
 	else
 		set keymap=greek_utf-8
-		let $default_lang = 0
+		let $default_lang = 1
+		echom "Greek keyboard enabled"
 	endif
 endfunc
 
