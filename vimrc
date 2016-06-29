@@ -234,7 +234,6 @@ nnoremap <C-a> :call NumberToggle()<cr>
 " z= for suggestions
 " [s and ]s for prev and next
 function! SpellCheckToggle(lang_switch)
-	echom ""
 	let sp_lang = "en_gb"
 
 	if(a:lang_switch == 1 && $spell_on == 1)
