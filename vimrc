@@ -23,6 +23,7 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'beloglazov/vim-online-thesaurus'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tclem/vim-arduino'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -137,6 +138,9 @@ let g:syntastic_tex_checkers=['lacheck']
 
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
+
+" vimtex clientserver
+let g:vimtex_latexmk_callback='clientserver'
 
 " gruvbox theme
 let g:gruvbox_italic=1
