@@ -8,6 +8,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
@@ -202,6 +203,19 @@ let g:tagbar_type_tex = {
 			\ 'sort'    : 0,
 			\ }
 
+" NERDTree git symbols
+let g:NERDTreeIndicatorMapCustom = {
+			\ "Modified"  : "✹",
+			\ "Staged"    : "✚",
+			\ "Untracked" : "✭",
+			\ "Renamed"   : "➜",
+			\ "Unmerged"  : "═",
+			\ "Deleted"   : "✖",
+			\ "Dirty"     : "✗",
+			\ "Clean"     : "✔︎",
+			\ "Unknown"   : "?"
+			\ }
+
 """""""""""""
 " Shortcuts "
 """""""""""""
@@ -212,6 +226,7 @@ nnoremap <silent> <C-h> :bprevious<CR><C-h>
 
 " Toggle tagbar
 nmap <F8> :TagbarToggle<CR>
+nmap <F7> :NERDTreeToggle<CR>
 
 """""""""""""
 " Functions "
