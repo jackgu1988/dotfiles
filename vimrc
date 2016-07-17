@@ -216,6 +216,9 @@ let g:NERDTreeIndicatorMapCustom = {
 			\ "Unknown"   : "?"
 			\ }
 
+" Close vim if NERDTree is the only window left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 """""""""""""
 " Shortcuts "
 """""""""""""
@@ -227,6 +230,9 @@ nnoremap <silent> <C-h> :bprevious<CR><C-h>
 " Toggle tagbar
 nmap <F8> :TagbarToggle<CR>
 nmap <F7> :NERDTreeToggle<CR>
+
+" Close buffer
+map <leader>bd :Bclose<cr>
 
 """""""""""""
 " Functions "
@@ -314,3 +320,24 @@ function! LanguageSwitch()
 endfunc
 
 nnoremap <silent> <F4> :call LanguageSwitch()<cr>
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+	let l:currentBufNum = bufnr("%")
+	let l:alternateBufNum = bufnr("#")
+
+	if buflisted(l:alternateBufNum)
+		buffer #
+	else
+		bnext
+	endif
+
+	if bufnr("%") == l:currentBufNum
+		new
+	endif
+
+	if buflisted(l:currentBufNum)
+		execute("bdelete! ".l:currentBufNum)
+	endif
+endfunction
