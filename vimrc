@@ -24,6 +24,9 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'beloglazov/vim-online-thesaurus'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tclem/vim-arduino'
+" Install ctags
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-surround'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -90,7 +93,7 @@ let g:ycm_semantic_triggers.tex = [
 
 " Offline Thesaurus in LaTeX
 " Ctrl x + Ctrl t (in insert mode)
-autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_US_v2.dat
+autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
 " For online Thesaurus hit \ + K
 
 " Correct treatment of .tex files
@@ -186,6 +189,19 @@ set modeline
 set list
 set listchars=tab:▸\ 
 
+" Tagbar categories for .tex files (also .ctags needs to exist in home)
+let g:tagbar_type_tex = {
+			\ 'ctagstype' : 'latex',
+			\ 'kinds'     : [
+			\ 's:sections',
+			\ 'g:graphics:0:0',
+			\ 'l:labels',
+			\ 'r:refs:1:0',
+			\ 'p:pagerefs:1:0'
+			\ ],
+			\ 'sort'    : 0,
+			\ }
+
 """""""""""""
 " Shortcuts "
 """""""""""""
@@ -193,6 +209,9 @@ set listchars=tab:▸\
 " Easy buffer switching
 nnoremap <silent> <C-l> :bnext<CR><C-l>
 nnoremap <silent> <C-h> :bprevious<CR><C-h>
+
+" Toggle tagbar
+nmap <F8> :TagbarToggle<CR>
 
 """""""""""""
 " Functions "
