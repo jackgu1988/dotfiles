@@ -24,7 +24,6 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'beloglazov/vim-online-thesaurus'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tclem/vim-arduino'
 " Install ctags
 Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-surround'
