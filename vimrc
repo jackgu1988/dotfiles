@@ -108,6 +108,7 @@ let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
 " also run: pip install --user powerline-status
 " download powerline fonts, install them and use one of them in the terminal
 " good option: Inconsolata-g for Powerline g 10
+set guifont=Roboto\ Mono\ for\ Powerline\ 10
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
