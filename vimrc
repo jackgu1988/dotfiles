@@ -5,7 +5,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -219,6 +219,13 @@ let g:NERDTreeIndicatorMapCustom = {
 
 " Close vim if NERDTree is the only window left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" gVim specific stuff
+if has('gui_running')
+	nmap <C-V> "+gP
+	imap <C-V> <ESC><C-V>i
+	vmap <C-C> "+y 
+endif
 
 """""""""""""
 " Shortcuts "
