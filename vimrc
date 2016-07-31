@@ -105,7 +105,6 @@ let g:tex_flavor='latex'
 let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
 
 " vim-airline
-" also run: pip install --user powerline-status
 " download powerline fonts, install them and use one of them in the terminal
 " good option: Inconsolata-g for Powerline g 10
 set guifont=Roboto\ Mono\ for\ Powerline\ 10
@@ -241,6 +240,10 @@ nmap <F7> :NERDTreeToggle<CR>
 
 " Close buffer
 map <leader>bd :Bclose<cr>
+
+" Indent long XML
+" requires xmlindent application
+au FileType xml setlocal equalprg=xmlindent\ -t\ 2>/dev/null
 
 """""""""""""
 " Functions "
