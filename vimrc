@@ -28,6 +28,11 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
+" Snippet support (next two plugins)
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'Yggdroot/indentLine'
+Plugin 'Raimondi/delimitMate'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -174,7 +179,7 @@ if @% != "" && filereadable(@%) != 0
 endif
 
 " Highlight current line
-set cursorline
+"set cursorline " Removed because makes scrolling very slow sometimes
 
 " Smaller tab size
 set tabstop=4
@@ -187,8 +192,19 @@ nnoremap <silent> <leader>q :call ClearSearch()<cr>
 set modeline
 
 " Show tabs
-set list
-set listchars=tab:▸\ 
+"set list
+"set listchars=tab:▸\ 
+set list lcs=tab:\|\ 
+
+" Snippet configuration
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-space>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " Tagbar categories for .tex files (also .ctags needs to exist in home)
 let g:tagbar_type_tex = {
