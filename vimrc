@@ -16,7 +16,7 @@ Plugin 'vim-scripts/LanguageTool'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
-Plugin 'morhetz/gruvbox'
+"Plugin 'morhetz/gruvbox'
 " Install texlive-texcount for VimtexCountWords to work
 Plugin 'lervag/vimtex'
 Plugin 'ervandew/supertab'
@@ -31,8 +31,9 @@ Plugin 'airblade/vim-gitgutter'
 " Snippet support (next two plugins)
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'Yggdroot/indentLine'
+"Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
+Plugin 'NLKNguyen/papercolor-theme'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -120,7 +121,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 " Make it always visible
 set laststatus=2
 
-let g:airline_theme = 'luna'
+let g:airline_theme = 'papercolor'
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -151,11 +152,10 @@ let g:tex_comment_nospell= 1
 " vimtex clientserver
 let g:vimtex_latexmk_callback='clientserver'
 
-" gruvbox theme
-let g:gruvbox_italic=1
+" PaperColor theme
 set background=dark
-colorscheme gruvbox
-hi Visual ctermbg=White ctermfg=DarkGray
+colorscheme PaperColor
+"hi Visual ctermbg=White ctermfg=DarkGray
 
 " Correct colours
 set t_Co=256
@@ -241,6 +241,9 @@ if has('gui_running')
 	imap <C-V> <ESC><C-V>i
 	vmap <C-C> "+y 
 endif
+
+" Conceal level
+setlocal conceallevel=2
 
 """""""""""""
 " Shortcuts "
