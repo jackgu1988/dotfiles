@@ -33,7 +33,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 "Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
-Plugin 'NLKNguyen/papercolor-theme'
+"Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'flazz/vim-colorschemes'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -323,8 +324,8 @@ function! SpellCheckToggle(lang_switch)
 
 	if(($spell_on == 0 && a:lang_switch == 0) || (a:lang_switch == 1 && $spell_on == 1))
 		exe "set spell spelllang=" . sp_lang
-		hi clear SpellBad
-		hi SpellBad cterm=underline,bold ctermfg=red
+		"hi clear SpellBad
+		"hi SpellBad cterm=underline,bold ctermfg=red ctermbg=9
 		let $spell_on = 1
 	else
 		set nospell
