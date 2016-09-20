@@ -35,6 +35,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 "Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'easymotion/vim-easymotion'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -122,7 +123,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 " Make it always visible
 set laststatus=2
 
-let g:airline_theme = 'papercolor'
+let g:airline_theme = 'luna'
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
