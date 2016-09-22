@@ -123,8 +123,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 " Make it always visible
 set laststatus=2
 
-let g:airline_theme = 'luna'
-
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
@@ -154,10 +152,10 @@ let g:tex_comment_nospell= 1
 " vimtex clientserver
 let g:vimtex_latexmk_callback='clientserver'
 
-" PaperColor theme
+" Solarized theme
 set background=dark
-colorscheme PaperColor
-"hi Visual ctermbg=White ctermfg=DarkGray
+colorscheme solarized
+let g:airline_theme = 'base16_solarized'
 
 " Correct colours
 set t_Co=256
