@@ -26,4 +26,5 @@ MiscToolbarDefault=FALSE
 MiscMiddleClickOpensUri=FALSE
 MiscDefaultWorkingDir=
 BackgroundDarkness=0.950000
+BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
 
