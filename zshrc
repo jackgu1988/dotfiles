@@ -5,7 +5,8 @@ export ZSH=/home/jack/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="miloshadzic"
+#ZSH_THEME="robbyrussell"
 
 #POWERLEVEL9K_DISABLE_RPROMPT=true
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status context dir rbenv vcs)
