@@ -179,7 +179,7 @@ if @% != "" && filereadable(@%) != 0
 endif
 
 " Highlight current line
-"set cursorline " Removed because makes scrolling very slow sometimes
+set cursorline " Removed if scrolling becomes very slow sometimes
 
 " Smaller tab size
 set tabstop=4
