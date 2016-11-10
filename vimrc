@@ -154,8 +154,12 @@ let g:vimtex_latexmk_callback='clientserver'
 
 " Solarized theme
 set background=dark
-colorscheme solarized
-let g:airline_theme = 'base16_solarized'
+colorscheme base16-atelierlakeside
+if has("gui_running")
+	let g:airline_theme = 'base16_atelierlakeside'
+else
+	let g:airline_theme = 'base16_tomorrow'
+endif
 
 " Correct colours
 set t_Co=256
