@@ -302,7 +302,7 @@ function! NumberToggle()
 	endif
 endfunc
 
-nnoremap <C-a> :call NumberToggle()<cr>
+nnoremap <C-x> :call NumberToggle()<cr>
 
 " Toggle spell checking
 " z= for suggestions
