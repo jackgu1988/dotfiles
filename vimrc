@@ -157,8 +157,10 @@ set background=dark
 colorscheme base16-atelierlakeside
 if has("gui_running")
 	let g:airline_theme = 'base16_atelierlakeside'
+	hi Search guifg=wheat
 else
 	let g:airline_theme = 'base16_tomorrow'
+	hi Search cterm=NONE ctermfg=black ctermbg=yellow
 endif
 
 " Correct colours
@@ -246,7 +248,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 if has('gui_running')
 	nmap <C-V> "+gP
 	imap <C-V> <ESC><C-V>i
-	vmap <C-C> "+y 
+	vmap <C-C> "+y
+	" Hide the menu
+	set guioptions-=T
 endif
 
 " Conceal level
