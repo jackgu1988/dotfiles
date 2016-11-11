@@ -170,6 +170,9 @@ set hidden
 " Mouse
 set mouse=a
 
+" Redraw less
+set lazyredraw
+
 " Vim needs a POSIX-Compliant shell. Fish is not.
 if $SHELL=~'bin/fish'
 	set shell=/bin/zsh
@@ -248,6 +251,10 @@ endif
 
 " Conceal level
 setlocal conceallevel=2
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
 
 """""""""""""
 " Shortcuts "
