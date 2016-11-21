@@ -147,6 +147,8 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_style_error_symbol = "☠"
+let g:syntastic_style_warning_symbol = '☢'
 
 " LaTeX syntax check
 " texlive-chktex or texlive-lacheck is required
@@ -206,7 +208,7 @@ set tabstop=4
 set shiftwidth=4
 
 " \q redraws the screen and removes any search highlighting
-nnoremap <silent> <leader>q :call ClearSearch()<cr>
+nnoremap <silent> <leader>q :nohlsearch<Bar>:echo<CR> 
 
 " Allow per-file settings
 set modeline
@@ -312,12 +314,6 @@ function! Reindent()
 endfunc
 
 nnoremap <silent> <leader>f :call Reindent()<cr>
-
-" Clears the search and un-highlights the search results
-function! ClearSearch()
-	nohl
-	let @/ = ""
-endfunc
 
 " Toggle between absolute and relative line numbering
 function! NumberToggle()
