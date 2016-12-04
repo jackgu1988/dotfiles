@@ -160,10 +160,6 @@ let g:tex_comment_nospell= 1
 
 " vimtex clientserver
 let g:vimtex_latexmk_callback='clientserver'
-let g:vimtex_fold_enabled=1
-set foldnestmax=10
-set nofoldenable
-set foldlevel=3
 
 " Solarized theme
 set background=dark
