@@ -19,7 +19,6 @@ Plugin 'scrooloose/syntastic'
 "Plugin 'morhetz/gruvbox'
 " Install texlive-texcount for VimtexCountWords to work
 Plugin 'lervag/vimtex'
-Plugin 'ervandew/supertab'
 Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'beloglazov/vim-online-thesaurus'
