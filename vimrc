@@ -11,30 +11,27 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
+"Plugin 'Shougo/neocomplete.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/LanguageTool'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
-"Plugin 'morhetz/gruvbox'
 " Install texlive-texcount for VimtexCountWords to work
 Plugin 'lervag/vimtex'
 Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'beloglazov/vim-online-thesaurus'
-Plugin 'terryma/vim-multiple-cursors'
 " Install ctags
 Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 " Snippet support (next two plugins)
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-"Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
-"Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'python-mode/python-mode'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -90,7 +87,7 @@ autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
 " https://github.com/Valloric/YouCompleteMe
 " For Fedora:
 " cd ~/.vim/bundle/YouCompleteMe
-" ./install.py
+" ./install.py --clang-completer
 " NOTE: needs python-devel and cmake
 if !exists('g:ycm_semantic_triggers')
 	let g:ycm_semantic_triggers = {}
@@ -387,4 +384,30 @@ function! <SID>BufcloseCloseIt()
 	if buflisted(l:currentBufNum)
 		execute("bdelete! ".l:currentBufNum)
 	endif
+endfunction
+
+" Function to find long sentences in files. Very useful when writing papers.
+function! FindLongSentences()
+	let line = 1
+	let longLines = "Long lines: "
+
+	while (line <= line("$"))
+		let thisLine = system("sed -n '" . line . "p' " . expand('%:p'))
+		let thisLine = substitute(thisLine, "'", "''", "g")
+		let words = system("echo '" . thisLine . "' | wc -w")
+		let words = substitute(words, '\n\+$', '', 'g')
+
+		" 25 is the maximum number of words that a sentence should have
+		if words > 25
+			let longLines = longLines . " l:" . line . "(" . words . "w)"
+		endif
+
+		let line = line + 1
+	endwhile
+
+	if len(longLines) == 12
+		let longLines = "No long lines found!"
+	endif
+
+	echo longLines
 endfunction
