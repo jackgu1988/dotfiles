@@ -265,6 +265,9 @@ setlocal conceallevel=2
 nnoremap j gj
 nnoremap k gk
 
+" Using rope makes Python extremely slow. Disabling.
+let g:pymode_rope = 0
+
 """""""""""""
 " Shortcuts "
 """""""""""""
