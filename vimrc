@@ -7,12 +7,12 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
+Plugin 'tpope/vim-sensible'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
-"Plugin 'Shougo/neocomplete.vim'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-scripts/LanguageTool'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -30,7 +30,6 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'easymotion/vim-easymotion'
 Plugin 'python-mode/python-mode'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -45,75 +44,25 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-" Indent automatically depending on filetype
-let g:tex_flavor='latex'
-set autoindent
-set cindent
-
-" Turn on line numbering
-set number
-
-" Set syntax on
-syntax on
-
-" Case insensitive search
-set ic
-
-" Match search results while typing
-set incsearch
-
-" Ignore case insensitive search if upper case characters exist
-set smartcase
-
-" Higlhight search
-set hls
-
-" Completion
-set wildmenu
-
-" Wrap text instead of being on one line
-set lbr
-
-" Scroll when 8 lines from the bottom
-set scrolloff=8
-
-" Fix for sequences causing delay after ESC is pressed
-set timeoutlen=1000 ttimeoutlen=10
-
-" Spell check in tex files by default
-autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
-
-" Latex autocomplete (with YouCompleteMe)
-" https://github.com/Valloric/YouCompleteMe
-" For Fedora:
-" cd ~/.vim/bundle/YouCompleteMe
-" ./install.py --clang-completer
-" NOTE: needs python-devel and cmake
-if !exists('g:ycm_semantic_triggers')
-	let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex = [
-			\ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-			\ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-			\ 're!\\hyperref\[[^]]*',
-			\ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-			\ 're!\\(include(only)?|input){[^}]*',
-			\ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
-			\ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
-			\ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
-			\ ]
-
-" Offline Thesaurus in LaTeX
-" Ctrl x + Ctrl t (in insert mode)
-autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
-" For online Thesaurus hit \ + K
-
-" Correct treatment of .tex files
 let g:tex_flavor='latex'
 
-" languagetool
-" need to fetch languagetool-commandline and put it in a local dir
-let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
+set number       " Turn on line numbering
+set ic           " Case insensitive search
+set smartcase    " Ignore case insensitive search if upper case characters exist
+set laststatus=2 " Make airline always visible
+set hidden       " Be able to switch buffers without saving
+set mouse=a      " Enable mouse
+set lazyredraw   " Redraw less
+set cursorline   " Highlight current line (may make vim slow)
+set modeline     " Allow per-file settings
+set tabstop=4    " Smaller tab size
+set shiftwidth=4 " Smaller tab size
+" Visible tab
+set list lcs=tab:\|\ 
+
+""""""""""""""""""""""""
+" Plugin Customisation "
+""""""""""""""""""""""""
 
 " vim-airline
 " download powerline fonts, install them and use one of them in the terminal
@@ -123,8 +72,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-" Make it always visible
-set laststatus=2
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -157,7 +104,10 @@ let g:tex_comment_nospell= 1
 " vimtex clientserver
 let g:vimtex_latexmk_callback='clientserver'
 
-" Solarized theme
+"""""""""""
+" Theming "
+"""""""""""
+
 set background=dark
 colorscheme base16-atelierlakeside
 if has("gui_running")
@@ -168,17 +118,34 @@ else
 	hi Search cterm=NONE ctermfg=black ctermbg=yellow
 endif
 
-" Correct colours
-set t_Co=256
+""""""""""""
+" My stuff "
+""""""""""""
 
-" Be able to switch buffers without saving
-set hidden
+" Spell check in tex files by default
+autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
 
-" Mouse
-set mouse=a
+" Offline Thesaurus in LaTeX
+" Ctrl x + Ctrl t (in insert mode)
+autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
+" For online Thesaurus hit \ + K
 
-" Redraw less
-set lazyredraw
+" Correct treatment of .tex files
+let g:tex_flavor='latex'
+
+" languagetool
+" need to fetch languagetool-commandline and put it in a local dir
+let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+	project_base_dir = os.environ['VIRTUAL_ENV']
+	activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+	execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 " Vim needs a POSIX-Compliant shell. Fish is not.
 if $SHELL=~'bin/fish'
@@ -192,23 +159,8 @@ if @% != "" && filereadable(@%) != 0
 	au FocusLost,InsertLeave,TextChanged * nested call AutoSave()
 endif
 
-" Highlight current line
-set cursorline " Removed if scrolling becomes very slow sometimes
-
-" Smaller tab size
-set tabstop=4
-set shiftwidth=4
-
 " \q redraws the screen and removes any search highlighting
-nnoremap <silent> <leader>q :nohlsearch<Bar>:echo<CR> 
-
-" Allow per-file settings
-set modeline
-
-" Show tabs
-"set list
-"set listchars=tab:▸\ 
-set list lcs=tab:\|\ 
+nnoremap <silent> <leader>q :nohlsearch<Bar>:echo<CR>
 
 " Snippet configuration
 " Trigger configuration. Do not use <tab> if you use
@@ -267,6 +219,38 @@ nnoremap k gk
 
 " Using rope makes Python extremely slow. Disabling.
 let g:pymode_rope = 0
+
+"****************** configure neocomplete **************************
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#enable_auto_close_preview = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+function! s:close_popup_and_complete()
+  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>close_popup_and_complete()<CR>
+
+let g:neocomplete#keyword_patterns = {}
+let g:neocomplete#sources#omni#input_patterns = {}
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+let g:neocomplete#keyword_patterns.tex     = '[a-zA-ZæÆøØåÅ][0-9a-zA-ZæÆøØåÅ]\+'
+let g:neocomplete#sources#omni#input_patterns.tex = '\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'
+
+"****************** end configure neocomplete **********************
 
 """""""""""""
 " Shortcuts "
