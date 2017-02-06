@@ -31,6 +31,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'python-mode/python-mode'
+Plugin 'sheerun/vim-polyglot'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -103,6 +104,10 @@ let g:tex_comment_nospell= 1
 
 " vimtex clientserver
 let g:vimtex_latexmk_callback='clientserver'
+
+" Polyglot
+" Disable for LaTeX since I am already using vimtex
+let g:polyglot_disabled = ['latex']
 
 """""""""""
 " Theming "
