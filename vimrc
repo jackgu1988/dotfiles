@@ -234,6 +234,8 @@ let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#enable_auto_close_preview = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Select the first suggestion automatically
+let g:neocomplete#enable_auto_select = 1
 
 function! s:close_popup_and_complete()
   return pumvisible() ? neocomplete#close_popup() : "\<CR>"
