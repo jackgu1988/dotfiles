@@ -277,6 +277,7 @@ map <leader>bd :Bclose<cr>
 " Indent long XML
 " requires xmlindent application
 au FileType xml setlocal equalprg=xmlindent\ -t\ 2>/dev/null
+au FileType json setlocal equalprg=python\ -m\ json.tool
 
 """""""""""""
 " Functions "
