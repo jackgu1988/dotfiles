@@ -32,6 +32,8 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'python-mode/python-mode'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'sjl/gundo.vim'
+Plugin '907th/vim-auto-save'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -58,8 +60,34 @@ set cursorline   " Highlight current line (may make vim slow)
 set modeline     " Allow per-file settings
 set tabstop=4    " Smaller tab size
 set shiftwidth=4 " Smaller tab size
-" Visible tab
-set list lcs=tab:\|\ 
+" Next few lines mostly stolen from sjl
+set autoread     " Loads file automatically if changed elsewhere
+" Visible elements
+set list
+set listchars=tab:▸\ ,extends:❯,precedes:❮
+set showbreak=↪
+" History and undo
+set history=1000
+set undofile
+set undoreload=10000
+" Backups
+set backup                        " enable backups
+set noswapfile                    " it's 2017, Vim.
+
+set undodir=~/.vim/tmp/undo//     " undo files
+set backupdir=~/.vim/tmp/backup// " backups
+set directory=~/.vim/tmp/swap//   " swap files
+
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&undodir))
+	call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+	call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+	call mkdir(expand(&directory), "p")
+endif
 
 """"""""""""""""""""""""
 " Plugin Customisation "
@@ -109,19 +137,17 @@ let g:vimtex_latexmk_callback='clientserver'
 " Disable for LaTeX since I am already using vimtex
 let g:polyglot_disabled = ['latex']
 
+" Get rid of bracket matching that slows scrolling down in tex files
+let g:vimtex_motion_matchparen = 0
+
 """""""""""
 " Theming "
 """""""""""
 
 set background=dark
-colorscheme base16-atelierlakeside
-if has("gui_running")
-	let g:airline_theme = 'base16_atelierlakeside'
-	hi Search guifg=wheat
-else
-	let g:airline_theme = 'base16_tomorrow'
-	hi Search cterm=NONE ctermfg=black ctermbg=yellow
-endif
+colorscheme PaperColor
+let g:airline_theme = 'papercolor'
+hi Search cterm=NONE ctermfg=black ctermbg=yellow guifg=wheat
 
 """"""""""""
 " My stuff "
@@ -157,12 +183,16 @@ if $SHELL=~'bin/fish'
 	set shell=/bin/zsh
 endif
 
-" Autosave if file exists
+" Map Ctrl-C to Esc
 ino <C-C> <Esc>
 
-if @% != "" && filereadable(@%) != 0
-	au FocusLost,InsertLeave,TextChanged * nested call AutoSave()
-endif
+" AutoSave
+let g:auto_save = 1 " enable AutoSave
+let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
+let g:auto_save_write_all_buffers = 1  " write all open buffers
+
+" Gundo
+nnoremap <F3> :GundoToggle<CR>
 
 " \q redraws the screen and removes any search highlighting
 nnoremap <silent> <leader>q :nohlsearch<Bar>:echo<CR>
@@ -215,9 +245,6 @@ if has('gui_running')
 	set guioptions-=T
 endif
 
-" Conceal level
-setlocal conceallevel=2
-
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
@@ -238,14 +265,27 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#enable_auto_select = 1
 
 function! s:close_popup_and_complete()
-  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+	return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>close_popup_and_complete()<CR>
 
 let g:neocomplete#keyword_patterns = {}
-let g:neocomplete#sources#omni#input_patterns = {}
+if !exists('g:neocomplete#sources#omni#input_patterns')
+	let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.tex =
+	\ '\v\\%('
+	\ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+	\ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
+	\ . '|hyperref\s*\[[^]]*'
+	\ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+	\ . '|%(include%(only)?|input)\s*\{[^}]*'
+	\ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+	\ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
+	\ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
+	\ . ')'
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -253,9 +293,6 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-let g:neocomplete#keyword_patterns.tex     = '[a-zA-ZæÆøØåÅ][0-9a-zA-ZæÆøØåÅ]\+'
-let g:neocomplete#sources#omni#input_patterns.tex = '\v\\\a*(ref|cite)\a*([^]]*\])?\{([^}]*,)*[^}]*'
 
 "****************** end configure neocomplete **********************
 
@@ -282,12 +319,6 @@ au FileType json setlocal equalprg=python\ -m\ json.tool
 """""""""""""
 " Functions "
 """""""""""""
-
-" Autosave
-function! AutoSave()
-	wa
-	redraw
-endfunc
 
 " Indent file
 function! Reindent()
