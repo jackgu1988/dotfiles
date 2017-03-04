@@ -34,6 +34,9 @@ Plugin 'python-mode/python-mode'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sjl/gundo.vim'
 Plugin '907th/vim-auto-save'
+" Notes + dependencies
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -139,6 +142,9 @@ let g:polyglot_disabled = ['latex']
 
 " Get rid of bracket matching that slows scrolling down in tex files
 let g:vimtex_motion_matchparen = 0
+
+" Notes directory
+let g:notes_directories = ['~/Documents/Notes', '~/Documents/Dropbox/Notes']
 
 """""""""""
 " Theming "
@@ -315,6 +321,17 @@ map <leader>bd :Bclose<cr>
 " requires xmlindent application
 au FileType xml setlocal equalprg=xmlindent\ -t\ 2>/dev/null
 au FileType json setlocal equalprg=python\ -m\ json.tool
+
+""""""""""""""""""
+" VIM on console "
+""""""""""""""""""
+
+" XFCE
+if has("autocmd")
+	au InsertEnter * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_BLOCK/TERMINAL_CURSOR_SHAPE_IBEAM/' ~/.config/xfce4/terminal/terminalrc"
+	au InsertLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_IBEAM/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+	au VimLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_IBEAM/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+endif
 
 """""""""""""
 " Functions "
