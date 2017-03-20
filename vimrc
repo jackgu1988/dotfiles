@@ -151,9 +151,10 @@ let g:notes_directories = ['~/Documents/Notes', '~/Documents/Dropbox/Notes']
 """""""""""
 
 set background=dark
-colorscheme PaperColor
-let g:airline_theme = 'papercolor'
-hi Search cterm=NONE ctermfg=black ctermbg=yellow guifg=wheat
+colorscheme jellybeans
+let g:airline_theme = 'luna'
+hi Search cterm=NONE ctermfg=black ctermbg=yellow guifg=#212121 guibg=#FFEB38
+hi IncSearch guifg=#212121 guibg=#FFEE58
 
 """"""""""""
 " My stuff "
