@@ -1,56 +1,34 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-" Keep Plugin commands between vundle#begin/end.
-Plugin 'tpope/vim-sensible'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'vim-scripts/LanguageTool'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/syntastic'
-" Install texlive-texcount for VimtexCountWords to work
-Plugin 'lervag/vimtex'
-Plugin 'kshenoy/vim-signature'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'beloglazov/vim-online-thesaurus'
-" Install ctags
-Plugin 'majutsushi/tagbar'
-Plugin 'airblade/vim-gitgutter'
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Shougo/neocomplete.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/syntastic'
+Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'sheerun/vim-polyglot'
+Plug 'sjl/gundo.vim'
+Plug '907th/vim-auto-save'
+Plug 'scrooloose/nerdcommenter'
+Plug 'flazz/vim-colorschemes'
+Plug 'vim-scripts/LanguageTool', { 'for': 'tex' }
+Plug 'kshenoy/vim-signature'
+Plug 'beloglazov/vim-online-thesaurus', { 'for': 'tex' }
+Plug 'majutsushi/tagbar'
+Plug 'airblade/vim-gitgutter'
 " Snippet support (next two plugins)
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'Raimondi/delimitMate'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'python-mode/python-mode'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'sjl/gundo.vim'
-Plugin '907th/vim-auto-save'
-" Notes + dependencies
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-let g:tex_flavor='latex'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'Raimondi/delimitMate'
+Plug 'python-mode/python-mode', { 'for': 'python' }
+Plug 'vim-scripts/CSApprox', !has('gui') ? {} : { 'on': [] }
+call plug#end()
+filetype plugin indent on
 
 set number       " Turn on line numbering
 set ic           " Case insensitive search
