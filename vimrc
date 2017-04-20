@@ -27,6 +27,7 @@ Plug 'honza/vim-snippets'
 Plug 'Raimondi/delimitMate'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'vim-scripts/CSApprox', !has('gui') ? {} : { 'on': [] }
+Plug 'mhinz/vim-startify'
 call plug#end()
 filetype plugin indent on
 
