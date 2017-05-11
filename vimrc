@@ -109,6 +109,8 @@ let g:syntastic_style_warning_symbol = '☢'
 " lacheck seems to be better/less annoying
 let g:syntastic_tex_checkers=['lacheck']
 
+let g:syntastic_sh_shellcheck_args = "-x"
+
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
 
