@@ -78,7 +78,7 @@ endif
 " vim-airline
 " download powerline fonts, install them and use one of them in the terminal
 " good option: Inconsolata-g for Powerline g 10
-set guifont=Roboto\ Mono\ for\ Powerline\ 10
+set guifont=Roboto\ Mono\ for\ Powerline\ 9
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -147,7 +147,7 @@ autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
 " Offline Thesaurus in LaTeX
 " Ctrl x + Ctrl t (in insert mode)
 autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
-" For online Thesaurus hit \ + K
+" For online Thesaurus hit \K
 
 " Correct treatment of .tex files
 let g:tex_flavor='latex'
