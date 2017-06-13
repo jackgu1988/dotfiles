@@ -10,8 +10,14 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
--- load the widget code
+-- load the volume control widget code
 local volume_control = require("volume-control")
+-- load the battery widget code
+local battery_widget = require("battery-widget")
+-- load the calendar widget code
+local calendar = require("calendar")
+-- load the keyboard layout widget code
+local layout_indicator = require("keyboard-layout-indicator")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -116,6 +122,15 @@ mytextclock = awful.widget.textclock()
 
 -- define your volume control, using default settings:
 volumecfg = volume_control({})
+-- define your battery widget
+battery = battery_widget({adapter = "BAT1"})
+-- define your layouts
+kbdcfg = layout_indicator({
+		layouts = {
+			{name="us",  layout="us",  variant=nil},
+			{name="el",  layout="el",  variant=nil}
+		}
+	})
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -196,6 +211,9 @@ mytasklist.buttons = awful.util.table.join(
 			-- Widgets that are aligned to the right
 			local right_layout = wibox.layout.fixed.horizontal()
 			if s == 1 then right_layout:add(wibox.widget.systray()) end
+			right_layout:add(kbdcfg.widget)
+			right_layout:add(volumecfg.widget)
+			right_layout:add(battery.widget)
 			right_layout:add(mytextclock)
 			right_layout:add(mylayoutbox[s])
 
@@ -204,7 +222,6 @@ mytasklist.buttons = awful.util.table.join(
 			layout:set_left(left_layout)
 			layout:set_middle(mytasklist[s])
 			layout:set_right(right_layout)
-			right_layout:add(volumecfg.widget)
 
 			mywibox[s]:set_widget(layout)
 		end
@@ -224,6 +241,9 @@ mytasklist.buttons = awful.util.table.join(
 			awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
 			awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
 			awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+			-- Keyboard layout
+			awful.key({ "Shift"         }, "Shift_R", function() kbdcfg:next() end ),
+			awful.key({ "Mod4", "Shift" }, "Shift_R", function() kbdcfg:prev() end ),
 			-- Brightness
 			awful.key({ }, "XF86MonBrightnessDown", function ()
 		awful.util.spawn("xbacklight -dec 15") end),
@@ -261,6 +281,7 @@ mytasklist.buttons = awful.util.table.join(
 				end),
 
 				-- Standard program
+				awful.key({ modkey,           }, "F12", function () awful.util.spawn("xscreensaver-command -lock") end),
 				awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
 				awful.key({ modkey, "Control" }, "r", awesome.restart),
 				awful.key({ modkey, "Shift"   }, "q", awesome.quit),
@@ -497,3 +518,26 @@ mytasklist.buttons = awful.util.table.join(
 											battimer:start()
 
 											-- end here for battery warning
+
+											-- Start the screensaver
+											awful.util.spawn_with_shell("xscreensaver -no-splash")
+
+											battery_widget({
+													adapter = "BAT1",
+													ac_prefix = "AC: ",
+													battery_prefix = "Bat: ",
+													limits = {
+														{ 25, "red"   },
+														{ 50, "orange"},
+														{100, "green" }
+													},
+													listen=true,
+													timeout = 10,
+													widget_text = "${AC_BAT}${color_on}${percent}%${color_off}",
+													tooltip_text = "Battery ${state}${time_est}\nCapacity: ${capacity_percent}%"
+												})
+
+											-- attach calendar as popup to your text clock widget:
+											calendar({}):attach(mytextclock)
+
+
