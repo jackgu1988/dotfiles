@@ -8,12 +8,12 @@ function run {
 }
 
 run nm-applet --sm-disable
-run cryptkeeper
+#run cryptkeeper
 run dropbox start -i
 run ./.dropbox-dist/dropbox-lnx.x86_64-26.4.24/dropbox
 
 #setxkbmap -layout "us,el"
-#setxkbmap -layout "us,el" -option "grp:alt_shift_toggle"
+setxkbmap -layout "us,el" -option "grp:alt_shift_toggle"
 
 # Enable tap to click and natural scroll
 xinput set-prop "SynPS/2 Synaptics TouchPad" "274" 1
