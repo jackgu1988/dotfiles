@@ -28,6 +28,8 @@ Plug 'Raimondi/delimitMate'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'vim-scripts/CSApprox', !has('gui') ? {} : { 'on': [] }
 Plug 'mhinz/vim-startify'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
 call plug#end()
 filetype plugin indent on
 
@@ -123,6 +125,9 @@ let g:polyglot_disabled = ['latex']
 
 " Get rid of bracket matching that slows scrolling down in tex files
 let g:vimtex_motion_matchparen = 0
+
+" Use Zathura as default PDF viewer
+let g:vimtex_view_method = 'zathura'
 
 " Notes directory
 let g:notes_directories = ['~/Documents/Notes', '~/Documents/Dropbox/Notes']
@@ -295,6 +300,8 @@ nnoremap <silent> <C-h> :bprevious<CR><C-h>
 " Toggle tagbar
 nmap <F8> :TagbarToggle<CR>
 nmap <F7> :NERDTreeToggle<CR>
+nmap <F9> :VimtexTocToggle<CR>
+nmap <F11> :VimtexLabelsToggle<CR>
 
 " Close buffer
 map <leader>bd :Bclose<cr>
@@ -308,11 +315,12 @@ au FileType json setlocal equalprg=python\ -m\ json.tool
 " VIM on console "
 """"""""""""""""""
 
-" XFCE
 if has("autocmd") && !has("gui_running")
-	au InsertEnter * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_BLOCK/TERMINAL_CURSOR_SHAPE_IBEAM/' ~/.config/xfce4/terminal/terminalrc"
-	au InsertLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_IBEAM/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
-	au VimLeave * silent execute "!sed -i.bak -e 's/TERMINAL_CURSOR_SHAPE_IBEAM/TERMINAL_CURSOR_SHAPE_BLOCK/' ~/.config/xfce4/terminal/terminalrc"
+	if &term =~ "rxvt-unicode-256color" || &term =~ "xterm-256color"
+		au InsertEnter * silent !echo -ne "\033[6 q"
+		au InsertLeave * silent !echo -ne "\033[2 q"
+		au VimLeave * silent !echo -ne "\033[2 q"
+	endif
 endif
 
 """""""""""""
