@@ -23,3 +23,7 @@ urxvt256c-ml*imFont: xft:Inconsolata\ For\ Powerline:size=10:antialias=true
 urxvt256c-ml*boldFont: xft:Inconsolata\ For\ Powerline:size=10:antialias=true
 urxvt256c-ml*italicFont: xft:Inconsolata\ For\ Powerline:size=10:antialias=true
 urxvt256c-ml*boldItalicFont: xft:Inconsolata\ For\ Powerline:size=10:antialias=true
+
+urxvt256c-ml*scrollTtyOutput: false
+urxvt256c-ml*scrollWithBuffer: true
+urxvt256c-ml*scrollTtyKeypress: true
