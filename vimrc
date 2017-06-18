@@ -298,10 +298,10 @@ nnoremap <silent> <C-l> :bnext<CR><C-l>
 nnoremap <silent> <C-h> :bprevious<CR><C-h>
 
 " Toggle tagbar
-nmap <F8> :TagbarToggle<CR>
-nmap <F7> :NERDTreeToggle<CR>
-nmap <F9> :VimtexTocToggle<CR>
-nmap <F11> :VimtexLabelsToggle<CR>
+nmap <F9> :TagbarToggle<CR>
+nmap <F8> :NERDTreeToggle<CR>
+nmap <F10> :VimtexTocToggle<CR>
+nmap <F12> :VimtexLabelsToggle<CR>
 
 " Close buffer
 map <leader>bd :Bclose<cr>
