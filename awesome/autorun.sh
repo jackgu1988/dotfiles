@@ -21,3 +21,6 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "284" 1
 # NOTE: on different HW:
 # check available mice: xinput list
 # check available properties: xinput list-props "MOUSE NAME"
+
+# Install polkit-gnome
+/usr/libexec/polkit-gnome-authentication-agent-1 &
