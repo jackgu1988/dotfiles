@@ -9,7 +9,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
@@ -91,27 +92,33 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 
+" ale
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+let g:ale_style_error_symbol = "☠"
+let g:ale_style_warning_symbol = '☢'
+
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
-let g:syntastic_style_error_symbol = "☠"
-let g:syntastic_style_warning_symbol = '☢'
+"let g:syntastic_error_symbol = "✗"
+"let g:syntastic_warning_symbol = "⚠"
+"let g:syntastic_style_error_symbol = "☠"
+"let g:syntastic_style_warning_symbol = '☢'
 
-" LaTeX syntax check
-" texlive-chktex or texlive-lacheck is required
-" lacheck seems to be better/less annoying
-let g:syntastic_tex_checkers=['lacheck']
+"" LaTeX syntax check
+"" texlive-chktex or texlive-lacheck is required
+"" lacheck seems to be better/less annoying
+"let g:syntastic_tex_checkers=['lacheck']
 
-let g:syntastic_sh_shellcheck_args = "-x"
+"let g:syntastic_sh_shellcheck_args = "-x"
 
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
@@ -128,6 +135,14 @@ let g:vimtex_motion_matchparen = 0
 
 " Use Zathura as default PDF viewer
 let g:vimtex_view_method = 'zathura'
+
+" Other vimtex options
+let g:tex_stylish = 1
+let g:tex_conceal = ''
+let g:tex_isk='48-57,a-z,A-Z,192-255,:'
+
+let g:vimtex_format_enabled = 1
+let g:vimtex_complete_img_use_tail = 1
 
 " Notes directory
 let g:notes_directories = ['~/Documents/Notes', '~/Documents/Dropbox/Notes']
