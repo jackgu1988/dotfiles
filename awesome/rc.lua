@@ -59,6 +59,7 @@ run_once({ "unclutter -root" }) -- entries must be comma-separated
 -- }}}
 
 -- {{{ Variable definitions
+--local chosen_theme = "powerarrow"
 local chosen_theme = "multicolor"
 local modkey       = "Mod4"
 local altkey       = "Mod1"
@@ -231,7 +232,7 @@ globalkeys = awful.util.table.join(
         awful.util.spawn("xbacklight -inc 15") end),
 
     -- Screensaver
-    awful.key({ modkey,           }, "l", function () awful.util.spawn("xscreensaver-command -lock") end), 
+    awful.key({ modkey,           }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
 
     -- Non-empty tag browsing
     awful.key({ altkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
@@ -677,7 +678,7 @@ awful.util.spawn_with_shell("xscreensaver -no-splash")
 
 
 -- Changing spotify notifications.
-naughty.config.presets.spotify = { 
+naughty.config.presets.spotify = {
     -- if you want to disable Spotify notifications completely, return false
     callback = function(args)
         return true
