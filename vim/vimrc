@@ -95,8 +95,11 @@ let g:airline_symbols.space = "\ua0"
 " ale
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠'
-let g:ale_style_error_symbol = "☠"
+let g:ale_style_error_symbol = '☠'
 let g:ale_style_warning_symbol = '☢'
+
+let g:ale_python_flake8_executable = 'python3-flake8'
+let g:ale_python_pylint_executable = 'python3-pylint'
 
 " syntastic
 "set statusline+=%#warningmsg#
