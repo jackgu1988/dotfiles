@@ -14,7 +14,7 @@ Plug 'w0rp/ale'
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
-Plug '907th/vim-auto-save'
+"Plug '907th/vim-auto-save'
 Plug 'scrooloose/nerdcommenter'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-scripts/LanguageTool', { 'for': 'tex' }
@@ -29,8 +29,8 @@ Plug 'Raimondi/delimitMate'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'vim-scripts/CSApprox', !has('gui') ? {} : { 'on': [] }
 Plug 'mhinz/vim-startify'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
 call plug#end()
 filetype plugin indent on
 
@@ -39,7 +39,8 @@ set ic           " Case insensitive search
 set smartcase    " Ignore case insensitive search if upper case characters exist
 set laststatus=2 " Make airline always visible
 set hidden       " Be able to switch buffers without saving
-set mouse=a      " Enable mouse
+set mouse=nvi    " Enable mouse
+set mousemodel=popup
 set lazyredraw   " Redraw less
 set cursorline   " Highlight current line (may make vim slow)
 set modeline     " Allow per-file settings
@@ -47,6 +48,8 @@ set tabstop=4    " Smaller tab size
 set shiftwidth=4 " Smaller tab size
 " Next few lines mostly stolen from sjl
 set autoread     " Loads file automatically if changed elsewhere
+set autowrite
+set autoindent
 " Visible elements
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
@@ -101,28 +104,6 @@ let g:ale_style_warning_symbol = '☢'
 let g:ale_python_flake8_executable = 'python3-flake8'
 let g:ale_python_pylint_executable = 'pylint-3'
 
-" syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
-"let g:syntastic_error_symbol = "✗"
-"let g:syntastic_warning_symbol = "⚠"
-"let g:syntastic_style_error_symbol = "☠"
-"let g:syntastic_style_warning_symbol = '☢'
-
-"" LaTeX syntax check
-"" texlive-chktex or texlive-lacheck is required
-"" lacheck seems to be better/less annoying
-"let g:syntastic_tex_checkers=['lacheck']
-
-"let g:syntastic_sh_shellcheck_args = "-x"
-
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
 
@@ -148,7 +129,7 @@ let g:vimtex_format_enabled = 1
 let g:vimtex_complete_img_use_tail = 1
 
 " Notes directory
-let g:notes_directories = ['~/Documents/Notes', '~/Documents/Dropbox/Notes']
+"let g:notes_directories = ['~/Documents/Notes', '~/Documents/Dropbox/Notes']
 
 """""""""""
 " Theming "
@@ -196,11 +177,6 @@ endif
 
 " Map Ctrl-C to Esc
 ino <C-C> <Esc>
-
-" AutoSave
-let g:auto_save = 1 " enable AutoSave
-let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
-let g:auto_save_write_all_buffers = 1  " write all open buffers
 
 " Gundo
 nnoremap <F3> :GundoToggle<CR>
