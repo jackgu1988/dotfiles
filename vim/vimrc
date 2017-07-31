@@ -56,8 +56,6 @@ set showbreak=↪
 set history=1000
 set undofile
 set undoreload=10000
-" Wrapping
-set nowrap
 set list " Show invisible characters
 " Backups
 set backup                        " enable backups
