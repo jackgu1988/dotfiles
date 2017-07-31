@@ -47,10 +47,7 @@ set cursorline   " Highlight current line (may make vim slow)
 set modeline     " Allow per-file settings
 set tabstop=4    " Smaller tab size
 set shiftwidth=4 " Smaller tab size
-" Next few lines mostly stolen from sjl
-set autoread     " Loads file automatically if changed elsewhere
 set autowrite
-set autoindent
 " Visible elements
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
@@ -59,6 +56,9 @@ set showbreak=↪
 set history=1000
 set undofile
 set undoreload=10000
+" Wrapping
+set nowrap
+set list " Show invisible characters
 " Backups
 set backup                        " enable backups
 set noswapfile                    " it's 2017, Vim.
@@ -170,11 +170,6 @@ if 'VIRTUAL_ENV' in os.environ:
 	execfile(activate_this, dict(__file__=activate_this))
 EOF
 
-" Vim needs a POSIX-Compliant shell. Fish is not.
-if $SHELL=~'bin/fish'
-	set shell=/bin/zsh
-endif
-
 " Map Ctrl-C to Esc
 ino <C-C> <Esc>
 
@@ -185,8 +180,6 @@ nnoremap <F3> :GundoToggle<CR>
 nnoremap <silent> <leader>q :nohlsearch<Bar>:echo<CR>
 
 " Snippet configuration
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-space>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -195,17 +188,17 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " Tagbar categories for .tex files (also .ctags needs to exist in home)
-let g:tagbar_type_tex = {
-			\ 'ctagstype' : 'latex',
-			\ 'kinds'     : [
-			\ 's:sections',
-			\ 'g:graphics:0:0',
-			\ 'l:labels',
-			\ 'r:refs:1:0',
-			\ 'p:pagerefs:1:0'
-			\ ],
-			\ 'sort'    : 0,
-			\ }
+"let g:tagbar_type_tex = {
+			"\ 'ctagstype' : 'latex',
+			"\ 'kinds'     : [
+			"\ 's:sections',
+			"\ 'g:graphics:0:0',
+			"\ 'l:labels',
+			"\ 'r:refs:1:0',
+			"\ 'p:pagerefs:1:0'
+			"\ ],
+			"\ 'sort'    : 0,
+			"\ }
 
 " NERDTree git symbols
 let g:NERDTreeIndicatorMapCustom = {
@@ -292,8 +285,8 @@ nnoremap <silent> <C-l> :bnext<CR><C-l>
 nnoremap <silent> <C-h> :bprevious<CR><C-h>
 
 " Toggle tagbar
-nmap <F9> :TagbarToggle<CR>
 nmap <F8> :NERDTreeToggle<CR>
+nmap <F9> :TagbarToggle<CR>
 nmap <F10> :VimtexTocToggle<CR>
 nmap <F12> :VimtexLabelsToggle<CR>
 
@@ -414,30 +407,4 @@ function! <SID>BufcloseCloseIt()
 	if buflisted(l:currentBufNum)
 		execute("bdelete! ".l:currentBufNum)
 	endif
-endfunction
-
-" Function to find long sentences in files. Very useful when writing papers.
-function! FindLongSentences()
-	let line = 1
-	let longLines = "Long lines: "
-
-	while (line <= line("$"))
-		let thisLine = system("sed -n '" . line . "p' " . expand('%:p'))
-		let thisLine = substitute(thisLine, "'", "''", "g")
-		let words = system("echo '" . thisLine . "' | wc -w")
-		let words = substitute(words, '\n\+$', '', 'g')
-
-		" 25 is the maximum number of words that a sentence should have
-		if words > 25
-			let longLines = longLines . " l:" . line . "(" . words . "w)"
-		endif
-
-		let line = line + 1
-	endwhile
-
-	if len(longLines) == 12
-		let longLines = "No long lines found!"
-	endif
-
-	echo longLines
 endfunction
