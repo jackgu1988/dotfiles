@@ -1,0 +1,142 @@
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'sjl/gundo.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'flazz/vim-colorschemes'
+Plug 'airblade/vim-gitgutter'
+call plug#end()
+
+set number       " Turn on line numbering
+set ic           " Case insensitive search
+set smartcase    " Ignore case insensitive search if upper case characters exist
+set hidden       " Be able to switch buffers without saving
+set mouse=nvi    " Enable mouse
+set lazyredraw   " Redraw less
+set modeline     " Allow per-file settings
+set tabstop=4    " Smaller tab size
+set shiftwidth=4 " Smaller tab size
+" Visible elements
+set listchars=tab:▸\ 
+set showbreak=↪
+
+" Correct treatment of .tex files
+let g:tex_flavor='latex'
+
+" Theming
+set background=dark
+colorscheme jellybeans
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
+
+" Map Ctrl-C to Esc
+ino <C-C> <Esc>
+
+" Gundo
+nnoremap <F3> :GundoToggle<CR>
+
+" \q redraws the screen and removes any search highlighting
+nnoremap <silent> <leader>q :nohlsearch<Bar>:echo<CR>
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" Easy buffer switching
+nnoremap <silent> <C-l> :bnext<CR><C-l>
+nnoremap <silent> <C-h> :bprevious<CR><C-h>
+
+" Close buffer
+map <leader>bd :Bclose<cr>
+
+" Indent file
+function! Reindent()
+	let cursor_position = getpos('.')
+	normal! H
+	let window_position = getpos('.')
+	normal gg=G
+	call setpos('.', window_position)
+	normal! zt
+	call setpos('.', cursor_position)
+endfunc
+
+nnoremap <silent> <leader>f :call Reindent()<cr>
+
+" Toggle between absolute and relative line numbering
+function! NumberToggle()
+	if(&relativenumber == 1)
+		set norelativenumber
+	else
+		set relativenumber
+	endif
+endfunc
+
+nnoremap <C-x> :call NumberToggle()<cr>
+
+" Toggle spell checking
+" z= for suggestions
+" [s and ]s for prev and next
+function! SpellCheckToggle(lang_switch)
+	let sp_lang = "en_gb"
+
+	if(a:lang_switch == 1 && $spell_on == 1)
+		if($default_lang != 0)
+			let $default_lang = 0
+			echom "English spell check enabled"
+		else
+			let sp_lang = "en_gb,el"
+			let $default_lang = 1
+			echom "Greek/English spell check enabled"
+		endif
+	endif
+
+	if(($spell_on == 0 && a:lang_switch == 0) || (a:lang_switch == 1 && $spell_on == 1))
+		exe "set spell spelllang=" . sp_lang
+		"hi clear SpellBad
+		"hi SpellBad cterm=underline,bold ctermfg=red ctermbg=9
+		let $spell_on = 1
+	else
+		set nospell
+		let $spell_on = 0
+	endif
+endfunc
+
+nnoremap <silent> <F6> :call SpellCheckToggle(0)<cr>
+nnoremap <silent> <F5> :call SpellCheckToggle(1)<cr>
+
+" Change writing language between English and Greek
+" Useful because vim wants English for its key-bindings
+function! LanguageSwitch()
+	if($default_lang != 0)
+		set keymap=""
+		let $default_lang = 0
+		echom "English keyboard enabled"
+	else
+		set keymap=greek_utf-8
+		let $default_lang = 1
+		echom "Greek keyboard enabled"
+	endif
+endfunc
+
+nnoremap <silent> <F4> :call LanguageSwitch()<cr>
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+	let l:currentBufNum = bufnr("%")
+	let l:alternateBufNum = bufnr("#")
+
+	if buflisted(l:alternateBufNum)
+		buffer #
+	else
+		bnext
+	endif
+
+	if bufnr("%") == l:currentBufNum
+		new
+	endif
+
+	if buflisted(l:currentBufNum)
+		execute("bdelete! ".l:currentBufNum)
+	endif
+endfunction
