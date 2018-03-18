@@ -34,6 +34,8 @@ Plug 'chrisbra/NrrwRgn'
 " Requires https://github.com/ryanoasis/nerd-fonts.git
 Plug 'ryanoasis/vim-devicons'
 Plug 'reedes/vim-pencil'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
 call plug#end()
 
 set number       " Turn on line numbering
@@ -81,6 +83,9 @@ endif
 " Plugin Customisation "
 """"""""""""""""""""""""
 
+" vim-notes
+let g:notes_directories = ['~/Documents/Dropbox/Notes']
+
 " vim-airline
 " download powerline fonts, install them and use one of them in the terminal
 set guifont=Inconsolata\ Nerd\ Font\ 10
@@ -107,7 +112,7 @@ let g:ale_python_pylint_executable = 'pylint-3'
 let g:tex_comment_nospell= 1
 
 " vimtex clientserver
-let g:vimtex_latexmk_callback='clientserver'
+let g:vimtex_compiler_latexmk = {'callback': 1}
 
 " Polyglot
 " Disable for LaTeX since I am already using vimtex
