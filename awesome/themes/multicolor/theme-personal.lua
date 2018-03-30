@@ -112,7 +112,8 @@ theme.cal = lain.widget.calendar({
 -- Weather
 local weathericon = wibox.widget.imagebox(theme.widget_weather)
 theme.weather = lain.widget.weather({
-    city_id = 2650188, -- placeholder (Egham)
+    city_id = 251773, -- placeholder (Vouliagmeni)
+    --city_id = 2650188, -- placeholder (Egham)
     --city_id = 2643743, -- placeholder (London)
     notification_preset = { font = "Fira Mono Regular 9", fg = theme.fg_normal },
     weather_na_markup = markup.fontfg(theme.font, "#eca4c4", "N/A "),
