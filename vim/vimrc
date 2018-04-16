@@ -14,7 +14,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
 "Plug '907th/vim-auto-save'
 Plug 'scrooloose/nerdcommenter'
-Plug 'flazz/vim-colorschemes'
+"Plug 'flazz/vim-colorschemes'
 Plug 'vim-scripts/LanguageTool', { 'for': 'tex' }
 Plug 'kshenoy/vim-signature'
 Plug 'beloglazov/vim-online-thesaurus', { 'for': 'tex' }
@@ -36,6 +36,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'reedes/vim-pencil'
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
+Plug 'ajh17/Spacegray.vim'
 call plug#end()
 
 set number       " Turn on line numbering
@@ -67,6 +68,8 @@ set noswapfile                    " it's 2017, Vim.
 set undodir=~/.vim/tmp/undo//     " undo files
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
+
+set encoding=UTF-8
 
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&undodir))
@@ -136,11 +139,31 @@ let g:vimtex_complete_img_use_tail = 1
 " Theming "
 """""""""""
 
+"set background=dark
+"colorscheme spacegray
+"let g:airline_theme = 'luna'
+"hi Search cterm=NONE ctermfg=black ctermbg=yellow guifg=#212121 guibg=#FFEB38
+"hi IncSearch guifg=#212121 guibg=#FFEE58
+"
+set t_Co=256
 set background=dark
-colorscheme jellybeans
-let g:airline_theme = 'luna'
-hi Search cterm=NONE ctermfg=black ctermbg=yellow guifg=#212121 guibg=#FFEB38
-hi IncSearch guifg=#212121 guibg=#FFEE58
+
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme spacegray
+ 
+let g:spacegray_underline_search = 1
+let g:spacegray_italicize_comments = 1
+
+" Vim-Airline Configuration
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1 
+let g:airline_theme='hybrid'
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 
 
 """"""""""""
 " My stuff "
