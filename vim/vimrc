@@ -83,7 +83,7 @@ let g:notes_directories = ['~/Documents/Dropbox/Notes']
 
 " vim-airline
 " download powerline fonts, install them and use one of them in the terminal
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 9
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 8
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -132,7 +132,7 @@ let g:vimtex_complete_img_use_tail = 1
 """""""""""
 
 if has("gui_running")
-  set guioptions=aeci
+  set guioptions=air
 else
   set t_Co=256
 endif
