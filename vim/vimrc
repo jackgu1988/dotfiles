@@ -28,6 +28,10 @@ Plug 'tpope/vim-surround'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ajh17/Spacegray.vim'
 Plug 'junegunn/fzf.vim'
+" Overtone
+Plug 'guns/vim-clojure-static'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-classpath'
 call plug#end()
 
 set number       " Turn on line numbering
@@ -119,7 +123,7 @@ set guifont=Source\ Code\ Pro\ 9
 let g:lightline = {
   \   'colorscheme': 'deus',
   \   'active': {
-  \     'left':[ [ 'mode', 'paste' ],
+  \     'left':[ [ 'mode', 'paste', 'spell' ],
   \              [ 'gitbranch', 'filename', 'modified' ]
   \     ],
   \     'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
