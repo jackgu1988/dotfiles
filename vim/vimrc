@@ -28,10 +28,6 @@ Plug 'tpope/vim-surround'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ajh17/Spacegray.vim'
 Plug 'junegunn/fzf.vim'
-" Overtone
-Plug 'guns/vim-clojure-static'
-Plug 'tpope/vim-fireplace'
-Plug 'tpope/vim-classpath'
 call plug#end()
 
 set number       " Turn on line numbering
@@ -47,6 +43,7 @@ set modeline     " Allow per-file settings
 set tabstop=4    " Smaller tab size
 set shiftwidth=4 " Smaller tab size
 set autowrite
+set hlsearch     " Highlight search results
 " Visible elements
 set list
 set listchars=tab:▸\ ,extends:❯,precedes:❮
@@ -76,6 +73,14 @@ endif
 if !isdirectory(expand(&directory))
 	call mkdir(expand(&directory), "p")
 endif
+
+" Search colours
+if has("autocmd") && !has("gui_running")
+	hi Search cterm=NONE ctermfg=grey ctermbg=blue
+else
+	hi InSearch guibg=peru guifg=wheat
+endif
+
 
 """"""""""""""""""""""""
 " Plugin Customisation "
