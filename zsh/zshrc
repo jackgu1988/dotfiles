@@ -64,7 +64,6 @@ plugins=(
   sudo
   colored-man-pages
   cp
-  safe-paste
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
