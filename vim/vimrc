@@ -11,7 +11,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'flazz/vim-colorschemes'
+Plug 'mhinz/vim-janah'
 Plug 'vim-scripts/LanguageTool', { 'for': 'tex' }
 Plug 'beloglazov/vim-online-thesaurus', { 'for': 'tex' }
 Plug 'majutsushi/tagbar'
@@ -26,7 +26,10 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 " Requires https://github.com/ryanoasis/nerd-fonts.git
 Plug 'ryanoasis/vim-devicons'
-Plug 'ajh17/Spacegray.vim'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'fenetikm/falcon'
+"Plug 'ajh17/Spacegray.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
@@ -75,11 +78,11 @@ if !isdirectory(expand(&directory))
 endif
 
 " Search colours
-if has("autocmd") && !has("gui_running")
-	hi Search cterm=NONE ctermfg=grey ctermbg=blue
-else
-	hi InSearch guibg=peru guifg=wheat
-endif
+"if has("autocmd") && !has("gui_running")
+	"hi Search cterm=NONE ctermfg=grey ctermbg=blue
+"else
+	"hi InSearch guibg=peru guifg=wheat
+"endif
 
 
 """"""""""""""""""""""""
@@ -124,9 +127,11 @@ nnoremap <C-M> :Files<cr>
 nnoremap <C-N> :Lines<cr>
 
 " download powerline fonts, install them and use one of them in the terminal
-set guifont=Source\ Code\ Pro\ 9
+set guifont=Monospace\ Regular\ 10
+" Enable Falcon theme support for lightline
+let g:falcon_lightline = 1
 let g:lightline = {
-  \   'colorscheme': 'deus',
+  \   'colorscheme': 'falcon',
   \   'active': {
   \     'left':[ [ 'mode', 'paste', 'spell' ],
   \              [ 'gitbranch', 'filename', 'modified' ]
@@ -189,8 +194,11 @@ highlight link ALEErrorSign Title
 "let g:ale_python_flake8_executable = 'python3-flake8'
 "let g:ale_python_pylint_executable = 'pylint-3'
 " Arch
-let g:ale_python_flake8_executable = 'flake8'
-let g:ale_python_pylint_executable = 'pylint'
+"let g:ale_python_flake8_executable = 'flake8'
+"let g:ale_python_pylint_executable = 'pylint'
+" Debian
+let g:ale_python_flake8_executable = 'python3 -m pyflakes'
+let g:ale_python_pylint_executable = 'pylint3'
 
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
@@ -217,14 +225,17 @@ let g:vimtex_complete_img_use_tail = 1
 " Theming "
 """""""""""
 
+set background=dark
 if has("gui_running")
   set guioptions=air
   set guioptions-=e
 else
   set t_Co=256
 endif
-set background=dark
-colorscheme spacegray
+if has('termguicolors') && !exists('$TMUX')
+  set termguicolors
+endif
+colorscheme falcon
 
 """"""""""""
 " My stuff "
@@ -235,7 +246,9 @@ autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
 
 " Offline Thesaurus in LaTeX
 " Ctrl x + Ctrl t (in insert mode)
-autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
+"autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
+" Debian
+autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_uk_UA_v2.dat
 " For online Thesaurus hit \K
 
 " Correct treatment of .tex files
@@ -244,16 +257,6 @@ let g:tex_flavor='latex'
 " languagetool
 " need to fetch languagetool-commandline and put it in a local dir
 let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
-
-"python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-	project_base_dir = os.environ['VIRTUAL_ENV']
-	activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-	execfile(activate_this, dict(__file__=activate_this))
-EOF
 
 " Map Ctrl-C to Esc
 ino <C-C> <Esc>
@@ -378,19 +381,19 @@ au FileType json setlocal equalprg=python\ -m\ json.tool
 """"""""""""""""""
 
 if has("autocmd") && !has("gui_running")
-	if &term =~ "rxvt-unicode-256color" || &term =~ "xterm-256color"
+	if &term =~ "rxvt-unicode-256color" || &term =~ "xterm-256color" || &term =~ "screen-256color"
 		au InsertEnter * silent !echo -ne "\033[6 q"
 		au InsertLeave * silent !echo -ne "\033[2 q"
 		au VimLeave * silent !echo -ne "\033[2 q"
-		" Konsole
-		let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-		let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-		let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-		" Tmux
-		if exists('$TMUX')
-			let &t_SI = "\ePtmux;\e" . &t_SI . "\e\\"
-			let &t_EI = "\ePtmux;\e" . &t_EI . "\e\\"
-		endif
+		"" Konsole
+		"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+		"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+		"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+		"" Tmux
+		"if exists('$TMUX')
+			"let &t_SI = "\ePtmux;\e" . &t_SI . "\e\\"
+			"let &t_EI = "\ePtmux;\e" . &t_EI . "\e\\"
+		"endif
 	endif
 endif
 
