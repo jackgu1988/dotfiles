@@ -397,6 +397,11 @@ if has("autocmd") && !has("gui_running")
 	endif
 endif
 
+" tmux specifics
+if exists('$TMUX')
+	set ttymouse=xterm2
+endif
+
 """""""""""""
 " Functions "
 """""""""""""
