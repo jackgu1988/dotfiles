@@ -127,7 +127,7 @@ nnoremap <C-M> :Files<cr>
 nnoremap <C-N> :Lines<cr>
 
 " download powerline fonts, install them and use one of them in the terminal
-set guifont=Monospace\ Regular\ 10
+set guifont=Monospace\ Regular\ 9
 " Enable Falcon theme support for lightline
 let g:falcon_lightline = 1
 let g:lightline = {
