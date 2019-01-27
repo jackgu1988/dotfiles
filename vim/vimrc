@@ -20,14 +20,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Raimondi/delimitMate'
-Plug 'python-mode/python-mode', { 'for': 'python' }
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 " Requires https://github.com/ryanoasis/nerd-fonts.git
 Plug 'ryanoasis/vim-devicons'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plug 'fenetikm/falcon'
+Plug 'ayu-theme/ayu-vim'
 "Plug 'ajh17/Spacegray.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -128,10 +128,8 @@ nnoremap <C-N> :Lines<cr>
 
 " download powerline fonts, install them and use one of them in the terminal
 set guifont=Monospace\ Regular\ 9
-" Enable Falcon theme support for lightline
-let g:falcon_lightline = 1
 let g:lightline = {
-  \   'colorscheme': 'falcon',
+  \   'colorscheme': 'solarized',
   \   'active': {
   \     'left':[ [ 'mode', 'paste', 'spell' ],
   \              [ 'gitbranch', 'filename', 'modified' ]
@@ -191,14 +189,14 @@ highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
 " Fedora
-"let g:ale_python_flake8_executable = 'python3-flake8'
-"let g:ale_python_pylint_executable = 'pylint-3'
+let g:ale_python_flake8_executable = 'python3-flake8'
+let g:ale_python_pylint_executable = 'pylint-3'
 " Arch
 "let g:ale_python_flake8_executable = 'flake8'
 "let g:ale_python_pylint_executable = 'pylint'
 " Debian
-let g:ale_python_flake8_executable = 'python3 -m pyflakes'
-let g:ale_python_pylint_executable = 'pylint3'
+"let g:ale_python_flake8_executable = 'python3 -m pyflakes'
+"let g:ale_python_pylint_executable = 'pylint3'
 
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
@@ -235,7 +233,8 @@ endif
 if has('termguicolors') && !exists('$TMUX')
   set termguicolors
 endif
-colorscheme falcon
+let ayucolor="dark"
+colorscheme ayu
 
 """"""""""""
 " My stuff "
@@ -246,9 +245,9 @@ autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
 
 " Offline Thesaurus in LaTeX
 " Ctrl x + Ctrl t (in insert mode)
-"autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
+autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
 " Debian
-autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_uk_UA_v2.dat
+"autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_uk_UA_v2.dat
 " For online Thesaurus hit \K
 
 " Correct treatment of .tex files
