@@ -198,6 +198,12 @@ let g:ale_python_pylint_executable = 'pylint-3'
 "let g:ale_python_flake8_executable = 'python3 -m pyflakes'
 "let g:ale_python_pylint_executable = 'pylint3'
 
+" Disable ALE for SMB and other remote shares because it slows down vim
+" Change the following dir as necessary for the OS
+let g:ale_pattern_options = {
+			\ '/run/user/1000/gvfs/.*': {'ale_enabled': 0},
+			\}
+
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
 
