@@ -2,10 +2,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'itchyny/lightline.vim'
-Plug 'bling/vim-bufferline'
 Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'sheerun/vim-polyglot'
@@ -41,7 +41,8 @@ set hidden       " Be able to switch buffers without saving
 set mouse=nvi    " Enable mouse
 set mousemodel=popup
 set lazyredraw   " Redraw less
-"set cursorline   " Highlight current line (may make vim slow)
+set regexpengine=1
+set cursorline   " Highlight current line (may make vim slow)
 set modeline     " Allow per-file settings
 set tabstop=4    " Smaller tab size
 set shiftwidth=4 " Smaller tab size
@@ -89,6 +90,10 @@ endif
 " Plugin Customisation "
 """"""""""""""""""""""""
 
+" airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='luna'
+
 " fzf
 " This is the default extra key bindings
 let g:fzf_action = {
@@ -126,38 +131,8 @@ nnoremap <C-B> :Buffers<cr>
 nnoremap <C-M> :Files<cr>
 nnoremap <C-N> :Lines<cr>
 
-" download powerline fonts, install them and use one of them in the terminal
-set guifont=Monospace\ Regular\ 9
-let g:lightline = {
-  \   'colorscheme': 'solarized',
-  \   'active': {
-  \     'left':[ [ 'mode', 'paste', 'spell' ],
-  \              [ 'gitbranch', 'filename', 'modified' ]
-  \     ],
-  \     'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
-  \   },
-  \   'component': {
-  \     'lineinfo': ' %3l:%-2v',
-  \   },
-  \   'component_function': {
-  \     'gitbranch': 'fugitive#head',
-  \   },
-  \   'tabline': {
-  \     'left': [ ['bufferline'] ]
-  \   },
-  \   'component_expand': {
-  \     'bufferline': 'LightlineBufferline',
-  \     'linter_warnings': 'LightlineLinterWarnings',
-  \     'linter_errors': 'LightlineLinterErrors',
-  \     'linter_ok': 'LightlineLinterOK'
-  \   },
-  \   'component_type': {
-  \     'bufferline': 'tabsel',
-  \     'readonly': 'error',
-  \     'linter_warnings': 'warning',
-  \     'linter_errors': 'error'
-  \   },
-  \ }
+" download the nerd font, install it and use it in the terminal
+set guifont=DroidSansMono\ Nerd\ Font\ Mono\ 9
 
 " ale
 function! LightlineLinterWarnings() abort
@@ -203,6 +178,11 @@ let g:ale_python_pylint_executable = 'pylint-3'
 let g:ale_pattern_options = {
 			\ '/run/user/1000/gvfs/.*': {'ale_enabled': 0},
 			\}
+
+" Startify
+let g:startify_skiplist = [
+			\ '/run/user/1000/gvfs/.*',
+			\ ]
 
 " Disable spell checking in LaTeX comments (makes text more readable)
 let g:tex_comment_nospell= 1
@@ -501,11 +481,6 @@ function! <SID>BufcloseCloseIt()
 	if buflisted(l:currentBufNum)
 		execute("bdelete! ".l:currentBufNum)
 	endif
-endfunction
-
-function! LightlineBufferline()
-  call bufferline#refresh_status()
-  return [ g:bufferline_status_info.before, g:bufferline_status_info.current, g:bufferline_status_info.after]
 endfunction
 
 " Show ALE messages in a pane
