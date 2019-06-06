@@ -24,6 +24,7 @@ Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Requires https://github.com/ryanoasis/nerd-fonts.git
 Plug 'ryanoasis/vim-devicons'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
@@ -93,6 +94,11 @@ endif
 " airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='luna'
+" Airline makes vim really slow when working on GVFS samba shares with
+" extensions enabled. Disabling it here.
+if expand('%p') =~ '^/run/user/1000/gvfs/'
+	let g:airline_extensions = []
+endif
 
 " fzf
 " This is the default extra key bindings
@@ -183,27 +189,6 @@ let g:ale_pattern_options = {
 let g:startify_skiplist = [
 			\ '/run/user/1000/gvfs/.*',
 			\ ]
-
-" Disable spell checking in LaTeX comments (makes text more readable)
-let g:tex_comment_nospell= 1
-
-" vimtex clientserver
-let g:vimtex_compiler_latexmk = {'callback': 1}
-
-" Polyglot
-" Disable for LaTeX since I am already using vimtex
-let g:polyglot_disabled = ['latex']
-
-" Get rid of bracket matching that slows scrolling down in tex files
-let g:vimtex_motion_matchparen = 0
-
-" Other vimtex options
-let g:tex_stylish = 1
-let g:tex_conceal = ''
-let g:tex_isk='48-57,a-z,A-Z,192-255,:'
-
-let g:vimtex_format_enabled = 1
-let g:vimtex_complete_img_use_tail = 1
 
 """""""""""
 " Theming "
