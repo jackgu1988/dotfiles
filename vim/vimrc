@@ -4,8 +4,8 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'w0rp/ale'
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'sheerun/vim-polyglot'
@@ -28,7 +28,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Requires https://github.com/ryanoasis/nerd-fonts.git
 Plug 'ryanoasis/vim-devicons'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plug 'ayu-theme/ayu-vim'
+Plug 'drewtempelmeyer/palenight.vim'
 "Plug 'ajh17/Spacegray.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -50,14 +50,13 @@ set shiftwidth=4 " Smaller tab size
 set autowrite
 set hlsearch     " Highlight search results
 " Visible elements
-set list
-set listchars=tab:▸\ ,extends:❯,precedes:❮
+set list " Show invisible characters
+set listchars=tab:▸\ ,eol:¬,space:·,extends:❯,precedes:❮ 
 set showbreak=↪
 " History and undo
 set history=1000
 set undofile
 set undoreload=10000
-set list " Show invisible characters
 " Backups
 set backup
 set noswapfile
@@ -79,26 +78,41 @@ if !isdirectory(expand(&directory))
 	call mkdir(expand(&directory), "p")
 endif
 
-" Search colours
-"if has("autocmd") && !has("gui_running")
-	"hi Search cterm=NONE ctermfg=grey ctermbg=blue
-"else
-	"hi InSearch guibg=peru guifg=wheat
-"endif
-
-
 """"""""""""""""""""""""
 " Plugin Customisation "
 """"""""""""""""""""""""
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'palenight',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste', 'spell' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ ['lineinfo'], ['percent'], ['linter_warnings', 'linter_errors', 'linter_ok'] ]
+      \ },
+      \ 'tabline': {
+      \   'left': [['buffers']], 'right': [['close']]
+      \ },
+      \ 'component': {
+      \   'lineinfo': ' %3l:%-2v',
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers',
+      \   'linter_warnings': 'LightlineLinterWarnings',
+      \   'linter_errors': 'LightlineLinterErrors',
+      \   'linter_ok': 'LightlineLinterOK'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel',
+      \   'readonly': 'error',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error'
+      \ },
+      \ }
 
-" airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='luna'
-" Airline makes vim really slow when working on GVFS samba shares with
-" extensions enabled. Disabling it here.
-if expand('%p') =~ '^/run/user/1000/gvfs/'
-	let g:airline_extensions = []
-endif
+set laststatus=2
 
 " fzf
 " This is the default extra key bindings
@@ -204,8 +218,9 @@ endif
 if has('termguicolors') && !exists('$TMUX')
   set termguicolors
 endif
-let ayucolor="dark"
-colorscheme ayu
+colorscheme palenight
+
+let g:palenight_terminal_italics=1
 
 """"""""""""
 " My stuff "
@@ -323,6 +338,11 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "****************** end configure neocomplete **********************
+
+" Do not alter the colour of SpecialKey characters when highlighting the
+" current line
+autocmd BufNewFile,BufRead * call matchadd('SpecialKey', '\s\+')
+autocmd BufNewFile,BufRead * call matchadd('NonText', '\n\+')
 
 """""""""""""
 " Shortcuts "
