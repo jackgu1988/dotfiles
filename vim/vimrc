@@ -7,29 +7,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'w0rp/ale'
-Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'mhinz/vim-janah'
-Plug 'vim-scripts/LanguageTool', { 'for': 'tex' }
-Plug 'beloglazov/vim-online-thesaurus', { 'for': 'tex' }
 Plug 'majutsushi/tagbar'
 Plug 'airblade/vim-gitgutter'
-" Snippet support (next two plugins)
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Raimondi/delimitMate'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'mhinz/vim-startify'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-surround'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Requires https://github.com/ryanoasis/nerd-fonts.git
 Plug 'ryanoasis/vim-devicons'
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'drewtempelmeyer/palenight.vim'
-"Plug 'ajh17/Spacegray.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -187,12 +178,6 @@ highlight link ALEErrorSign Title
 " Fedora
 let g:ale_python_flake8_executable = 'python3-flake8'
 let g:ale_python_pylint_executable = 'pylint-3'
-" Arch
-"let g:ale_python_flake8_executable = 'flake8'
-"let g:ale_python_pylint_executable = 'pylint'
-" Debian
-"let g:ale_python_flake8_executable = 'python3 -m pyflakes'
-"let g:ale_python_pylint_executable = 'pylint3'
 
 " Disable ALE for SMB and other remote shares because it slows down vim
 " Change the following dir as necessary for the OS
@@ -226,23 +211,6 @@ let g:palenight_terminal_italics=1
 """"""""""""
 " My stuff "
 """"""""""""
-
-" Spell check in tex files by default
-autocmd BufNewFile,BufRead *.tex :call SpellCheckToggle(0)
-
-" Offline Thesaurus in LaTeX
-" Ctrl x + Ctrl t (in insert mode)
-autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_en_GB_v2.dat
-" Debian
-"autocmd BufNewFile,BufRead *.tex set thesaurus+=/usr/share/mythes/th_uk_UA_v2.dat
-" For online Thesaurus hit \K
-
-" Correct treatment of .tex files
-let g:tex_flavor='latex'
-
-" languagetool
-" need to fetch languagetool-commandline and put it in a local dir
-let g:languagetool_jar='$HOME/.languagetool-cmd/languagetool-commandline.jar'
 
 " Map Ctrl-C to Esc
 ino <C-C> <Esc>
@@ -319,17 +287,6 @@ let g:neocomplete#keyword_patterns = {}
 if !exists('g:neocomplete#sources#omni#input_patterns')
 	let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.tex =
-			\ '\v\\%('
-			\ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-			\ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
-			\ . '|hyperref\s*\[[^]]*'
-			\ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-			\ . '|%(include%(only)?|input)\s*\{[^}]*'
-			\ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-			\ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
-			\ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
-			\ . ')'
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -356,8 +313,6 @@ nnoremap <silent> <C-h> :bprevious<CR><C-h>
 " Toggle tagbar
 nmap <F8> :NERDTreeToggle<CR>
 nmap <F9> :TagbarToggle<CR>
-nmap <F10> :VimtexTocToggle<CR>
-nmap <F12> :VimtexLabelsToggle<CR>
 
 " Close buffer
 map <leader>bd :Bclose<cr>
@@ -376,15 +331,6 @@ if has("autocmd") && !has("gui_running")
 		au InsertEnter * silent !echo -ne "\033[6 q"
 		au InsertLeave * silent !echo -ne "\033[2 q"
 		au VimLeave * silent !echo -ne "\033[2 q"
-		"" Konsole
-		"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-		"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-		"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-		"" Tmux
-		"if exists('$TMUX')
-		"let &t_SI = "\ePtmux;\e" . &t_SI . "\e\\"
-		"let &t_EI = "\ePtmux;\e" . &t_EI . "\e\\"
-		"endif
 	endif
 endif
 
@@ -440,8 +386,6 @@ function! SpellCheckToggle(lang_switch)
 
 	if(($spell_on == 0 && a:lang_switch == 0) || (a:lang_switch == 1 && $spell_on == 1))
 		exe "set spell spelllang=" . sp_lang
-		"hi clear SpellBad
-		"hi SpellBad cterm=underline,bold ctermfg=red ctermbg=9
 		let $spell_on = 1
 	else
 		set nospell
